@@ -2,16 +2,80 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import AuthorQuiz from './AuthorQuiz';
-import reportWebVitals from './reportWebVitals';
+import { shuffle, sample } from 'underscore';
+
+const authors = [
+  {
+		name: 'Mark Twain',
+		imageUrl: 'images/authors/marktwain.jpeg',
+		imageSource: 'Wikimedia Commons',
+		books: [ 'The Adventures of Huckleberry Finn' ]
+	},
+	{
+		name: 'Brandon Sanderson',
+		imageUrl: 'images/authors/brandonsanderson.jpeg',
+		imageSource: 'Wikimedia Commons',
+		books: ['Mistborn', 'Stormlight Archive']
+	},
+	{
+		name: 'Herman Hesse',
+		imageUrl: 'images/authors/hermanhesse.jpeg',
+		imageSource: 'Wikimedia Commons',
+		books: ['Steppenwolf']
+	},
+	{
+		name: 'Jim Butcher',
+		imageUrl: 'images/authors/jimbutcher.jpeg',
+		imageSource: 'Wikimedia Commons',
+		books: ['Ghost Story', 'Cold case']
+	},
+	{
+		name: 'Charles Dickens',
+		imageUrl: 'images/authors/charlesdickens.jpeg',
+		imageSource: 'Wikimedia Commons',
+		books: ['David Copperfield', 'A Tale of Two Cities']
+	},
+	{
+		name: 'Joe Abercrombie',
+		imageUrl: 'images/authors/joeabercrombie.jpeg',
+		imageSource: 'Wikimedia Commons',
+		books: ['The Blade Itself', 'Red Blood', 'Last Argument of Kings']
+	},
+  {
+    name: "P.A. Valiente",
+    imageUrl:'images/authors/pavaliente.png',
+    imageSource: 'Wikimedia Commons',
+    books: [
+      'Our half of the Sphere',
+      'A death in the making',
+      'Comoda critica a la sociedad mexicana'
+    ]
+  }
+];
+
+function getTurnData(authors) {
+  const allBooks = authors.reduce((p, c, i) => {
+    return p.concat(c.books);
+  }, []);
+  const fourRandomBooks = shuffle(allBooks).slice(0, 4);
+  const answer = sample(fourRandomBooks)  
+  return {
+    books: fourRandomBooks,
+    author: authors.find((author) =>
+      author.books.some((title) => 
+      title === answer))
+  }
+
+}
+
+const state = {
+  turnData: getTurnData(authors)
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <AuthorQuiz />
+    <AuthorQuiz {...state}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
