@@ -69,13 +69,24 @@ function getTurnData(authors) {
 }
 
 const state = {
-  turnData: getTurnData(authors)
+  turnData: getTurnData(authors),
+  highlight: '',
 }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <AuthorQuiz {...state}/>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function onAnswerSelected(answer) {
+	const isCorrect = state.turnData.author.books.some((book) => book === answer)
+	state.highlight = isCorrect ? 'correct' : 'wrong';
+	render();
+}
+
+function render() {
+	ReactDOM.render(
+		<React.StrictMode>
+			<AuthorQuiz {...state} onAnswerSelected={onAnswerSelected}/>
+		</React.StrictMode>,
+		document.getElementById('root')
+		);
+}
+render();
+
 
