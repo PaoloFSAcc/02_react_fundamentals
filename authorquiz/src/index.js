@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import AuthorQuiz from './AuthorQuiz';
 import { shuffle, sample } from 'underscore';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import AddAuthorForm from './AddAuthorForm';
 
 const authors = [
   {
@@ -68,10 +70,13 @@ function getTurnData(authors) {
 
 }
 
-const state = {
-  turnData: getTurnData(authors),
-  highlight: '',
+function resetState() {
+	return {
+		turnData: getTurnData(authors),
+		highlight: '',
+	  }
 }
+let state = resetState();
 
 function onAnswerSelected(answer) {
 	const isCorrect = state.turnData.author.books.some((book) => book === answer)
@@ -79,10 +84,33 @@ function onAnswerSelected(answer) {
 	render();
 }
 
+function App() {
+	const onCont = () =>{
+		state = resetState();
+		render();
+	}
+	return(
+		<AuthorQuiz {...state} onAnswerSelected={onAnswerSelected} onContinue={onCont}/>
+	);
+}
+
+const AuthorWrapper = withRouter(({history}) =>	
+	<AddAuthorForm onAddAuthor={ (author) => {
+		console.log("we did it honeybee")
+		authors.push(author);
+		history.push('/');
+		}}
+	/>
+	
+);
+
 function render() {
 	ReactDOM.render(
 		<React.StrictMode>
-			<AuthorQuiz {...state} onAnswerSelected={onAnswerSelected}/>
+			<BrowserRouter>
+				<Route exact path="/" component={App}/>
+				<Route exact path="/add" component={AuthorWrapper}/>
+			</BrowserRouter>
 		</React.StrictMode>,
 		document.getElementById('root')
 		);

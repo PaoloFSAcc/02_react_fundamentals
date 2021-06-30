@@ -9,3 +9,4 @@ Pluralsight course by Liam McLennan for Full Stack University at Accenture
 6. For testing, the instructions use enzyme adapter with react 16, this has not been yet officially released so I used: https://www.npmjs.com/package/@wojtekmaj/enzyme-adapter-react-17
 7. Even though I have the same code as the one found in another github repository, the last test does not run. (https://github.com/andasimion/AuthorQuiz-react-redux/blob/master/src/AuthorQuiz.test.js)
 8. A bit distracted on the Form Library part (JSONSchemaForm), check Chapter 6, video Form Libraries, minute 3:13
+9. 
