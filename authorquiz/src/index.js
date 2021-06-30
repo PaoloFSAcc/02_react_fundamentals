@@ -92,7 +92,9 @@ function reducer(state = {authors, turnData: getTurnData(authors), highlight: ''
 		default: return state;
 	}
 }
-let store = Redux.createStore(reducer);
+
+//Added redux debug parameter
+let store = Redux.createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(
 	<BrowserRouter>
