@@ -71,17 +71,7 @@ function getTurnData(authors) {
   }
 
 }
-//Not needed anymore
-// function resetState() {
-// 	return {
-// 		turnData: getTurnData(authors),
-// 		highlight: '',
-// 	  }
-// }
-//Substitute state for store
-//let state = resetState();
 
-//
 function reducer(state = {authors, turnData: getTurnData(authors), highlight: '' }, action) {
 	switch(action.type) {
 		case 'ANSWER_SELECTED':
@@ -104,46 +94,13 @@ function reducer(state = {authors, turnData: getTurnData(authors), highlight: ''
 }
 let store = Redux.createStore(reducer);
 
-// function onAnswerSelected(answer) {
-// 	const isCorrect = state.turnData.author.books.some((book) => book === answer)
-// 	state.highlight = isCorrect ? 'correct' : 'wrong';
-// 	render();
-// }
-
-//This was also deleted because the redux provider needs to include addAuthor, by moving it there, theres no need to have it here
-// function App() {
-// 	// const onCont = () =>{
-// 	// 	state = resetState();
-// 	// 	render();
-// 	// }
-// 	return(
-// 		<ReactRedux.Provider store={store}>
-// 			<AuthorQuiz/>
-// 		</ReactRedux.Provider>		
-// 	);
-// }
-
-// const AuthorWrapper = withRouter(({history}) =>	
-// 	<AddAuthorForm onAddAuthor={ (author) => {
-// 		authors.push(author);
-// 		history.push('/');
-// 		}}
-// 	/>
-	
-// );
-
-//Rerendering is now done by redux, no need to rerender
-//function render() {
-	ReactDOM.render(
-		<BrowserRouter>
-			<ReactRedux.Provider store={store}>
-				<Route exact path="/" component={AuthorQuiz}/>
-				<Route exact path="/add" component={AddAuthorForm}/>
-			</ReactRedux.Provider>				
-		</BrowserRouter>,
-		document.getElementById('root')
-	);
-//}
-//render();
-
+ReactDOM.render(
+	<BrowserRouter>
+		<ReactRedux.Provider store={store}>
+			<Route exact path="/" component={AuthorQuiz}/>
+			<Route exact path="/add" component={AddAuthorForm}/>
+		</ReactRedux.Provider>				
+	</BrowserRouter>,
+	document.getElementById('root')
+);
 
